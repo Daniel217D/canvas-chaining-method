@@ -6,11 +6,8 @@
             });
         for (let i = 0; i < $c_canvas.get('c').offsetWidth; i = i + 100) {
             $c_canvas
-                .beginPath()
                 .line(i,0,i+100,100)
                 .line(i+100,0,i,100)
-                .closePath()
-                .stroke()
         }
         $c_canvas.rect(10, 10, 50, 50)
             .set({
