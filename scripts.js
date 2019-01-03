@@ -19,7 +19,7 @@
             .stroke()
             .set({
                 'strokeStyle':'red',
-                'strokeWidth':2
+                'lineWidth':2
             })
             .line([
                 [10,10,60,60],
