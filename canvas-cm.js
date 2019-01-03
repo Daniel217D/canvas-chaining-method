@@ -4,7 +4,6 @@ function $c(canvas) {
 
     const ctx = canvas.getContext('2d');
 
-
     this.setSize = function(x, y) {
         if (x === undefined && y === undefined) {
             canvas.width = parseInt(getComputedStyle(canvas).width);
@@ -19,6 +18,15 @@ function $c(canvas) {
         }
 
         return this
+    };
+
+    this.line = function(sx,sy,ex,ey){
+        this.beginPath()
+            .moveTo(ex, ey)
+            .lineTo(sx, sy)
+            .closePath()
+            .stroke();
+        return this;
     };
 
     this.get = function(p) {
