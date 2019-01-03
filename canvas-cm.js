@@ -40,6 +40,17 @@ function $c(canvas) {
         return this;
     };
 
+    this.square = function(x,y,side){
+        this.beginPath()
+            .rect(x,y,side,side)
+            .fill()
+            .stroke()
+            .closePath()
+
+
+        return this;
+    };
+
     this.get = function (p) {
         switch (p.toLowerCase()) {
             case 'canvas':
