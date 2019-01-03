@@ -1,21 +1,21 @@
 function $c(canvas) {
-    if (!canvas)
+    if (!canvas)//TODO CHECK IS CANVAS
         throw 'Problems with canvas';
 
-    this.ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
 
     this.setSize = function(x, y) {
         if (x === undefined && y === undefined) {
-            this.ctx.canvas.width = parseInt(getComputedStyle(canvas).width);
-            this.ctx.canvas.height = parseInt(getComputedStyle(canvas).height);
+            canvas.width = parseInt(getComputedStyle(canvas).width);
+            canvas.height = parseInt(getComputedStyle(canvas).height);
         } else if (x !== undefined && y !== undefined) {
-            this.ctx.canvas.width = x;
-            this.ctx.canvas.height = y;
+            canvas.width = x;
+            canvas.height = y;
         } else {
             x = x === undefined ? y : x;
-            this.ctx.canvas.width = x;
-            this.ctx.canvas.height = x;
+            canvas.width = x;
+            canvas.height = x;
         }
 
         return this
@@ -29,20 +29,20 @@ function $c(canvas) {
         if (typeof s === 'object' && s !== null) {
             for (let i in s) {
                 if(s.hasOwnProperty(i)){
-                    this.ctx[i] = s[i];
+                    ctx[i] = s[i];
                 }
             }
         } else if (s !== undefined && val !== undefined) {
-            this.ctx[s] = val;
+            ctx[s] = val;
         }
         return this;
     };
 
 
-    for (let method in this.ctx) {
-        if (typeof this.ctx[method] === 'function' && this[method] === undefined) {
+    for (let method in ctx) {
+        if (typeof ctx[method] === 'function' && this[method] === undefined) {
             this[method] = (...args) => {
-                this.ctx[method](...args)
+                ctx[method](...args)
                 return this
             }
         }
