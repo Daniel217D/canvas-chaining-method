@@ -21,21 +21,6 @@ function $c(canvas) {
         return this
     };
 
-    this.moveTo = function(x, y) {
-        this.ctx.moveTo(x, y);
-        return this;
-    };
-
-    this.lineTo = function(x, y) {
-        this.ctx.lineTo(x, y);
-        return this;
-    };
-
-    this.stroke = function() {
-        this.ctx.stroke();
-        return this;
-    };
-
     this.getCanvas = function() {
         return this.ctx.canvas;
     };
