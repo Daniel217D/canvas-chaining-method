@@ -21,8 +21,20 @@ function $c(canvas) {
         return this
     };
 
-    this.getCanvas = function() {
-        return this.ctx.canvas;
+    this.get = function(p) {
+        switch (p.toLowerCase()) {
+            case 'canvas':
+            case 'c':
+                return ctx.canvas;
+            case 'width':
+            case 'w':
+                return ctx.width;
+            case 'height':
+            case 'h':
+                return ctx.height;
+            default:
+                return null;
+        }
     };
 
     this.set = function(s, val) {
