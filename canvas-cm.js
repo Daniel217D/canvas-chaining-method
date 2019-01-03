@@ -21,11 +21,22 @@ function $c(canvas) {
     };
 
     this.line = function(sx,sy,ex,ey){
-        this.beginPath()
-            .moveTo(ex, ey)
-            .lineTo(sx, sy)
-            .closePath()
-            .stroke();
+        let lines = [];
+        if(Array.isArray(sx)){
+            lines = sx;
+        } else {
+            lines = [
+                [sx,sy,ex,ey]
+            ]
+        }
+        lines.forEach((i)=>{
+            this.beginPath()
+                .moveTo(i[0], i[1])
+                .lineTo(i[2], i[3])
+                .closePath()
+                .stroke();
+        });
+
         return this;
     };
 
