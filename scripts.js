@@ -1,24 +1,38 @@
-(function(){
+(function () {
     function draw() {
         const $c_canvas = new $c(document.getElementById('c')).setSize()
             .set({
                 strokeStyle: 'red'
             });
-        for (let i = 0; i < $c_canvas.getCanvas().offsetWidth; i = i + 100) {
+        for (let i = 0; i < $c_canvas.get('c').offsetWidth; i = i + 100) {
             $c_canvas
-                .moveTo(i, 0)
-                .lineTo(i + 100, 100)
-                .stroke()
-                .moveTo(i + 100, 0)
-                .lineTo(i, 100)
+                .beginPath()
+                .line(i,0,i+100,100)
+                .line(i+100,0,i,100)
+                .closePath()
                 .stroke()
         }
-
-        $c_canvas.rect(10, 10, 50, 50).fill()
+        $c_canvas.rect(10, 10, 50, 50)
+            .set({
+                'fillStyle':'blue',
+                'shadowBlur':10,
+                'shadowColor':'brown'
+            })
+            .fill()
+            .stroke()
+            .set({
+                'strokeStyle':'red',
+                'strokeWidth':2
+            })
+            .line([
+                [10,10,60,60],
+                [60,10,10,60]
+            ])
 
     }
+
     draw();
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         draw();
     })
 })();
