@@ -99,21 +99,21 @@ function $c(canvas) {
 
         return this;
     };
-    //TODO s -> delay
+
     /**
      * Clear interval by id
      *
      * @param {string|number} id - Interval id
-     * @param {number} [s=0] - Delay before cleaning
+     * @param {number} [delay=0] - Delay before cleaning
      * @returns {$c}
      */
-    this.cinterval = function(id,s){
-        s = (s === undefined) ? 0 : s;
+    this.cinterval = function(id,delay){
+        delay = (delay === undefined) ? 0 : delay;
 
         if(intervals[id])
             setTimeout(function () {
                 clearInterval(intervals[id]);
-            },s);
+            },delay);
 
         return this
     };
