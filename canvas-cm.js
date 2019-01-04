@@ -196,13 +196,13 @@ function $c(canvas) {
         switch (p.toLowerCase()) {
             case 'canvas':
             case 'c':
-                return ctx.canvas;
+                return canvas;
             case 'width':
             case 'w':
-                return ctx.width;
+                return canvas.width;
             case 'height':
             case 'h':
-                return ctx.height;
+                return canvas.height;
         }
         return ctx[p];
     };
