@@ -5,17 +5,24 @@ function $c(canvas) {
     const ctx = canvas.getContext('2d');
     let intervals = [];
 
-    this.setSize = function (x, y) {
-        if (x === undefined && y === undefined) {
+    /**
+     *  Set size of canvas
+     *
+     * @param {number} w Width of canvas
+     * @param {number} h Height of canvas
+     * @returns {$c}
+     */
+    this.setSize = function (w, h) {
+        if (w === undefined && h === undefined) {
             canvas.width = parseInt(getComputedStyle(canvas).width);
             canvas.height = parseInt(getComputedStyle(canvas).height);
-        } else if (x !== undefined && y !== undefined) {
-            canvas.width = x;
-            canvas.height = y;
+        } else if (w !== undefined && h !== undefined) {
+            canvas.width = w;
+            canvas.height = h;
         } else {
-            x = x === undefined ? y : x;
-            canvas.width = x;
-            canvas.height = x;
+            w = w === undefined ? h : w;
+            canvas.width = w;
+            canvas.height = w;
         }
 
         return this
