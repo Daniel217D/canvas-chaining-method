@@ -27,7 +27,14 @@
             ]);
         $c_canvas.interval(function(i){
            this.line(100+i*100,50,200+i*100,50);
-        },'a',500,2000);
+        },'a',500,2000)
+            .timeout(function(){
+                this.square(200,0,100)
+            },'a',2100)
+            .timeout(function(){
+                this.square(200,0,100)
+            },'b',2500)
+            .ctimeout('b',2100);
 
         console.log($c_canvas.get('strokeStyle'));
     }

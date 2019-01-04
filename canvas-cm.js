@@ -4,7 +4,7 @@ function $c(canvas) {
 
     const ctx = canvas.getContext('2d');
     let intervals = [];
-
+    let timeouts = [];
     /**
      *  Set size of canvas
      *
@@ -99,7 +99,7 @@ function $c(canvas) {
 
         return this;
     };
-
+    //TODO s -> delay
     /**
      * Clear interval by id
      *
@@ -113,6 +113,26 @@ function $c(canvas) {
         if(intervals[id])
             setTimeout(function () {
                 clearInterval(intervals[id]);
+            },s);
+
+        return this
+    };
+
+    this.timeout = function (f, id, delay) {
+        if(timeouts[id])
+            clearTimeout(timeouts[id]);
+
+        timeouts[id] = setTimeout(f.bind(this),delay);
+
+        return this
+    };
+
+    this.ctimeout = function(id,s){
+        s = (s === undefined) ? 0 : s;
+
+        if(timeouts[id])
+            setTimeout(function () {
+                clearTimeout(timeouts[id]);
             },s);
 
         return this
