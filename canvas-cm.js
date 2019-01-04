@@ -117,7 +117,14 @@ function $c(canvas) {
 
         return this
     };
-
+    /**
+     * Set timeout and set this on ctx
+     *
+     * @param {function} f - Function for interval
+     * @param {string|number} id - Interval id - use for cleaning
+     * @param {number} delay - Delay of interval
+     * @returns {$c}
+     */
     this.timeout = function (f, id, delay) {
         if(timeouts[id])
             clearTimeout(timeouts[id]);
@@ -126,14 +133,20 @@ function $c(canvas) {
 
         return this
     };
-
-    this.ctimeout = function(id,s){
-        s = (s === undefined) ? 0 : s;
+    /**
+     * Clear interval by id
+     *
+     * @param {string|number} id - Interval id
+     * @param {number} [delay=0] - Delay before cleaning
+     * @returns {$c}
+     */
+    this.ctimeout = function(id,delay){
+        delay = (delay === undefined) ? 0 : delay;
 
         if(timeouts[id])
             setTimeout(function () {
                 clearTimeout(timeouts[id]);
-            },s);
+            },delay);
 
         return this
     };
