@@ -5,6 +5,17 @@ function $c(canvas) {
     const ctx = canvas.getContext('2d');
     let intervals = [];
     let timeouts = [];
+
+    /**
+     * Translate radians to degrees
+     *
+     * @param {number} d - Degrees
+     * @returns {number}
+     */
+    function degree(d) {
+        return d * Math.PI / 180;
+    }
+
     /**
      *  Set size of canvas
      *
