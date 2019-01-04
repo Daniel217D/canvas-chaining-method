@@ -31,7 +31,7 @@ function $c(canvas) {
     /**
      * Draw line
      *
-     * @param {number} sx - X position of start point
+     * @param {number|{sx,sy,ex,ey}[]} sx - X position of start point || Array of points
      * @param {number} sy - Y position of start point
      * @param {number} ex - X position of end point
      * @param {number} ey - Y position of end point
