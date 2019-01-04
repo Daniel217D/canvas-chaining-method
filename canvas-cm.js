@@ -8,8 +8,8 @@ function $c(canvas) {
     /**
      *  Set size of canvas
      *
-     * @param {number} w Width of canvas
-     * @param {number} h Height of canvas
+     * @param {number} w - Width of canvas
+     * @param {number} h - Height of canvas
      * @returns {$c}
      */
     this.setSize = function (w, h) {
@@ -28,6 +28,15 @@ function $c(canvas) {
         return this
     };
 
+    /**
+     * Draw line
+     *
+     * @param {number} sx - X position of start point
+     * @param {number} sy - Y position of start point
+     * @param {number} ex - X position of end point
+     * @param {number} ey - Y position of end point
+     * @returns {$c}
+     */
     this.line = function (sx, sy, ex, ey) {
         let lines = [];
         if (Array.isArray(sx)) {
@@ -48,6 +57,14 @@ function $c(canvas) {
         return this;
     };
 
+    /**
+     * Draw square
+     *
+     * @param x - X top left position
+     * @param y - Y top left position
+     * @param side - Side of the square
+     * @returns {$c}
+     */
     this.square = function(x,y,side){
         this.beginPath()
             .rect(x,y,side,side)
@@ -57,7 +74,16 @@ function $c(canvas) {
         return this;
     };
 
-    this.interval = function(f,id,s,stop){
+    /**
+     * Set interval and set this on ctx
+     *
+     * @param {function} f - Function for interval
+     * @param {string|number} id - Interval id - use for cleaning
+     * @param {number} delay - Delay of interval
+     * @param {number} [stop] - Delay for clearInterval
+     * @returns {$c}
+     */
+    this.interval = function(f,id,delay,stop){
         if(intervals[id])
             clearInterval(intervals[id]);
 
@@ -66,7 +92,7 @@ function $c(canvas) {
         f.call(this,counter++);
         intervals[id] = setInterval(() => {
             f.call(this,counter++)
-        },s);
+        },delay);
 
         if(stop !== undefined)
             this.cinterval(id,stop);
@@ -74,6 +100,13 @@ function $c(canvas) {
         return this;
     };
 
+    /**
+     * Clear interval by id
+     *
+     * @param {string|number} id - Interval id
+     * @param {number} [s=0] - Delay before cleaning
+     * @returns {$c}
+     */
     this.cinterval = function(id,s){
         s = (s === undefined) ? 0 : s;
 
@@ -85,6 +118,11 @@ function $c(canvas) {
         return this
     };
 
+    /**
+     * Return parameter of ctx
+     * @param {string} p - Name of parameter
+     * @returns {*}
+     */
     this.get = function (p) {
         switch (p.toLowerCase()) {
             case 'canvas':
@@ -96,11 +134,17 @@ function $c(canvas) {
             case 'height':
             case 'h':
                 return ctx.height;
-            default:
-                return null;
         }
+        return ctx[p];
     };
 
+    /**
+     * Set parameter
+     *
+     * @param {string} s - Name of parameter
+     * @param {string} val - Value of parameter
+     * @returns {$c}
+     */
     this.set = function (s, val) {
         if (typeof s === 'object' && s !== null) {
             for (let i in s) {
@@ -114,7 +158,11 @@ function $c(canvas) {
         return this;
     };
 
-
+    /**
+     * Set unset before functions
+     *
+     * @see {@link https://codepen.io/zachwolf/post/chaining-canvas-methods}
+     */
     for (let method in ctx) {
         if (typeof ctx[method] === 'function' && this[method] === undefined) {
             this[method] = (...args) => {

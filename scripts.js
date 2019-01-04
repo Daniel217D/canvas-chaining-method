@@ -28,6 +28,8 @@
         $c_canvas.interval(function(i){
            this.line(100+i*100,50,200+i*100,50);
         },'a',500,2000);
+
+        console.log($c_canvas.get('strokeStyle'));
     }
 
     draw();
