@@ -19,8 +19,8 @@ function $c(canvas) {
     /**
      *  Set size of canvas
      *
-     * @param {number} w - Width of canvas
-     * @param {number} h - Height of canvas
+     * @param {number} [w] - Width of canvas
+     * @param {number} [h] - Height of canvas
      * @returns {$c}
      */
     this.setSize = function (w, h) {
