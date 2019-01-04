@@ -10,6 +10,8 @@
                 .line(i + 100, 0, i, 100)
         }
         $c_canvas
+            .drawImage('https://via.placeholder.com/100x100',[50,50,50,50,300,0,150,100])
+            .drawImage('https://via.placeholder.com/100x100',[450,0])
             .set({
                 'fillStyle': 'rgba(0,0,0,0)',
                 'shadowBlur': 10,

@@ -151,6 +151,30 @@ function $c(canvas) {
         return this
     };
 
+    //TODO jsDoc
+    this.drawImage = function (src,s,callback) {
+        const sc = (s !== undefined) ? s.length : 0;
+        if(sc !== 2 && sc !== 4 && sc !== 8){
+            console.error('Uncaught TypeError: Failed to execute \'drawImage\' on \'CanvasRenderingContext2D\': Valid arities are: [2, 4, 8], but '+sc+' arguments provided.');
+            return this
+        }
+
+        const img = new Image();
+        img.src = src;
+        img.onload = function () {
+            if(sc === 2)
+                ctx.drawImage(img,s[0], s[1]);
+            else if(sc === 4)
+                ctx.drawImage(img,s[0], s[1], s[2], s[3]);
+            else
+                ctx.drawImage(img,s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]);
+
+            if(callback)
+                callback.call(this);
+        };
+        return this;
+    };
+
     /**
      * Return parameter of ctx
      * @param {string} p - Name of parameter
