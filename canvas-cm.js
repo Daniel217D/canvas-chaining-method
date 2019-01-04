@@ -32,9 +32,9 @@ function $c(canvas) {
      * Draw line
      *
      * @param {number|{sx,sy,ex,ey}[]} sx - X position of start point || Array of points
-     * @param {number} sy - Y position of start point
-     * @param {number} ex - X position of end point
-     * @param {number} ey - Y position of end point
+     * @param {number} [sy] - Y position of start point
+     * @param {number} [ex] - X position of end point
+     * @param {number} [ey] - Y position of end point
      * @returns {$c}
      */
     this.line = function (sx, sy, ex, ey) {
@@ -141,8 +141,8 @@ function $c(canvas) {
     /**
      * Set parameter
      *
-     * @param {string} s - Name of parameter
-     * @param {string} val - Value of parameter
+     * @param {string|Object} s - Name of parameter | Object of parameters (key:value)
+     * @param {string} [val] - Value of parameter
      * @returns {$c}
      */
     this.set = function (s, val) {
