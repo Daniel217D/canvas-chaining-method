@@ -76,9 +76,9 @@ function $c(canvas) {
      * @param side - Side of the square
      * @returns {$c}
      */
-    this.square = function(x,y,side){
+    this.square = function (x, y, side) {
         this.beginPath()
-            .rect(x,y,side,side)
+            .rect(x, y, side, side)
             .fill()
             .stroke()
             .closePath();
@@ -94,19 +94,19 @@ function $c(canvas) {
      * @param {number} [stop] - Delay for clearInterval
      * @returns {$c}
      */
-    this.interval = function(f,id,delay,stop){
-        if(intervals[id])
+    this.interval = function (f, id, delay, stop) {
+        if (intervals[id])
             clearInterval(intervals[id]);
 
         let counter = 0;
 
-        f.call(this,counter++);
+        f.call(this, counter++);
         intervals[id] = setInterval(() => {
-            f.call(this,counter++)
-        },delay);
+            f.call(this, counter++)
+        }, delay);
 
-        if(stop !== undefined)
-            this.cinterval(id,stop);
+        if (stop !== undefined)
+            this.cinterval(id, stop);
 
         return this;
     };
@@ -118,13 +118,13 @@ function $c(canvas) {
      * @param {number} [delay=0] - Delay before cleaning
      * @returns {$c}
      */
-    this.cinterval = function(id,delay){
+    this.cinterval = function (id, delay) {
         delay = (delay === undefined) ? 0 : delay;
 
-        if(intervals[id])
+        if (intervals[id])
             setTimeout(function () {
                 clearInterval(intervals[id]);
-            },delay);
+            }, delay);
 
         return this
     };
@@ -137,10 +137,10 @@ function $c(canvas) {
      * @returns {$c}
      */
     this.timeout = function (f, id, delay) {
-        if(timeouts[id])
+        if (timeouts[id])
             clearTimeout(timeouts[id]);
 
-        timeouts[id] = setTimeout(f.bind(this),delay);
+        timeouts[id] = setTimeout(f.bind(this), delay);
 
         return this
     };
@@ -151,37 +151,38 @@ function $c(canvas) {
      * @param {number} [delay=0] - Delay before cleaning
      * @returns {$c}
      */
-    this.ctimeout = function(id,delay){
+    this.ctimeout = function (id, delay) {
         delay = (delay === undefined) ? 0 : delay;
 
-        if(timeouts[id])
+        if (timeouts[id])
             setTimeout(function () {
                 clearTimeout(timeouts[id]);
-            },delay);
+            }, delay);
 
         return this
     };
 
     //TODO jsDoc
-    this.drawImage = function (src,s,callback) {
+    this.drawImage = function (src, s, callback) {
         const sc = (s !== undefined) ? s.length : 0;
-        if(sc !== 2 && sc !== 4 && sc !== 8){
-            console.error('Uncaught TypeError: Failed to execute \'drawImage\' on \'CanvasRenderingContext2D\': Valid arities are: [2, 4, 8], but '+sc+' arguments provided.');
+        if (sc !== 2 && sc !== 4 && sc !== 8) {
+            console.error('Uncaught TypeError: Failed to execute \'drawImage\' on \'CanvasRenderingContext2D\': Valid arities are: [2, 4, 8], but ' + sc + ' arguments provided.');
             return this
         }
-
         const img = new Image();
         img.src = src;
-        img.onload = function () {
-            if(sc === 2)
-                ctx.drawImage(img,s[0], s[1]);
-            else if(sc === 4)
-                ctx.drawImage(img,s[0], s[1], s[2], s[3]);
+        img.onload = () => {
+            if (sc === 2)
+                ctx.drawImage(img, s[0], s[1]);
+            else if (sc === 4)
+                ctx.drawImage(img, s[0], s[1], s[2], s[3]);
             else
-                ctx.drawImage(img,s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]);
+                ctx.drawImage(img, s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]);
 
-            if(callback)
+            if (callback) {
                 callback.call(this);
+            }
+
         };
         return this;
     };
