@@ -18,13 +18,16 @@
             .square(10, 10, 50)
             .set({
                 'strokeStyle': 'red',
-                'lineWidth': 2
+                'lineWidth': 2,
+                'shadowBlur': 0,
             })
             .line([
                 [10, 10, 60, 60],
                 [60, 10, 10, 60]
-            ])
-
+            ]);
+        $c_canvas.interval(function(i){
+           this.line(100+i*100,50,200+i*100,50);
+        },'a',500,2000);
     }
 
     draw();

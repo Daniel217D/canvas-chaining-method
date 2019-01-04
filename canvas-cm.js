@@ -3,6 +3,7 @@ function $c(canvas) {
         throw 'Problems with canvas';
 
     const ctx = canvas.getContext('2d');
+    let intervals = [];
 
     this.setSize = function (x, y) {
         if (x === undefined && y === undefined) {
@@ -45,10 +46,36 @@ function $c(canvas) {
             .rect(x,y,side,side)
             .fill()
             .stroke()
-            .closePath()
+            .closePath();
+        return this;
+    };
 
+    this.interval = function(f,id,s,stop){
+        if(intervals[id])
+            clearInterval(intervals[id]);
+
+        let counter = 0;
+
+        f.call(this,counter++);
+        intervals[id] = setInterval(() => {
+            f.call(this,counter++)
+        },s);
+
+        if(stop !== undefined)
+            this.cinterval(id,stop);
 
         return this;
+    };
+
+    this.cinterval = function(id,s){
+        s = (s === undefined) ? 0 : s;
+
+        if(intervals[id])
+            setTimeout(function () {
+                clearInterval(intervals[id]);
+            },s);
+
+        return this
     };
 
     this.get = function (p) {
@@ -84,7 +111,7 @@ function $c(canvas) {
     for (let method in ctx) {
         if (typeof ctx[method] === 'function' && this[method] === undefined) {
             this[method] = (...args) => {
-                ctx[method](...args)
+                ctx[method](...args);
                 return this
             }
         }
