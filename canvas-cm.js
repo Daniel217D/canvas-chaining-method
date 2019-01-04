@@ -187,6 +187,17 @@ function $c(canvas) {
         return this;
     };
 
+    this.rotate = function (deg, x, y) {
+        if (x !== undefined) {
+            y = y === undefined ? x : y;
+            ctx.translate(x,y)
+        }
+            ctx.rotate(degree(deg));
+        if(x !==undefined)
+            ctx.translate(-x,-y);
+        return this
+    };
+    
     /**
      * Return parameter of ctx
      * @param {string} p - Name of parameter
