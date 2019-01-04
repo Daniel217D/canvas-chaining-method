@@ -214,8 +214,9 @@ function $c(canvas) {
     this.get = function (p) {
         switch (p.toLowerCase()) {
             case 'canvas':
-            case 'c':
                 return canvas;
+            case 'ctx':
+                return ctx;
             case 'width':
             case 'w':
                 return canvas.width;
