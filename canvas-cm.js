@@ -94,6 +94,7 @@ function $c(canvas) {
      * @param {number} [stop] - Delay for clearInterval
      * @returns {$c}
      */
+    //TODO id as optional
     this.interval = function (f, id, delay, stop) {
         if (intervals[id])
             clearInterval(intervals[id]);
@@ -136,6 +137,8 @@ function $c(canvas) {
      * @param {number} delay - Delay of interval
      * @returns {$c}
      */
+
+    // TODO id as optional
     this.timeout = function (f, id, delay) {
         if (timeouts[id])
             clearTimeout(timeouts[id]);
@@ -197,7 +200,12 @@ function $c(canvas) {
             ctx.translate(-x,-y);
         return this
     };
-    
+
+    this.clear = function () {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        return this;
+    }
+
     /**
      * Return parameter of ctx
      * @param {string} p - Name of parameter
