@@ -227,6 +227,15 @@ function $c(canvas) {
         return ctx[p];
     };
 
+    this.on = function (name, f) {
+        if(Array.isArray(name)) {
+            name.forEach(function (i) {
+                canvas.addEventListener(i,f.bind(this))
+            })
+        } else {
+            canvas.addEventListener(name,f.bind(this))
+        }
+    }
     /**
      * Set parameter
      *
