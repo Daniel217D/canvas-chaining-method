@@ -1,3 +1,5 @@
+import {degree} from "./helpers";
+
 function CanvasCM(canvas) {
     if (!canvas)//TODO CHECK IS CANVAS
         throw 'Problems with canvas';
@@ -5,21 +7,11 @@ function CanvasCM(canvas) {
     const ctx = canvas.getContext('2d');
 
     /**
-     * Translate degrees to radians
-     *
-     * @param {number} d - Degrees
-     * @returns {number}
-     */
-    function degree(d) {
-        return d * Math.PI / 180;
-    }
-
-    /**
      *  Set size of canvas
      *
      * @param {number} [w] - Width of canvas
      * @param {number} [h] - Height of canvas
-     * @returns {$c}
+     * @returns {CanvasCM}
      */
     this.setSize = function (w, h) {
         if (w === undefined && h === undefined) {
@@ -44,7 +36,7 @@ function CanvasCM(canvas) {
      * @param {number} [sy] - Y position of start point
      * @param {number} [ex] - X position of end point
      * @param {number} [ey] - Y position of end point
-     * @returns {$c}
+     * @returns {CanvasCM}
      */
     this.line = function (sx, sy, ex, ey) {
         let lines = [];
@@ -73,7 +65,7 @@ function CanvasCM(canvas) {
      * @param x - X top left position
      * @param y - Y top left position
      * @param side - Side of the square
-     * @returns {$c}
+     * @returns {CanvasCM}
      */
     this.square = function (x, y, side) {
         this.beginPath()
@@ -85,23 +77,30 @@ function CanvasCM(canvas) {
     };
 
     /**
-     * Draw square
+     * Draw circle
      *
      * @param {number} x - X top left position
      * @param {number} y - Y top left position
      * @param {number} r - Radius of the circle
-     * @returns {$c}
+     * @returns {CanvasCM}
      */
     this.circle = function (x, y, r) {
         this.beginPath();
         this.arc(x, y, r, 0, degree(360));
         this.stroke();
-        
+
         return this;
     };
 
 
-    //TODO jsDoc
+    /**
+     * Draw image
+     *
+     * @param {string} src - image src
+     * @param {[]} s - list of params
+     * @param {function} callback - callable after load image
+     * @returns {CanvasCM}
+     */
     this.drawImage = function (src, s, callback) {
         const sc = (s !== undefined) ? s.length : 0;
         if (sc !== 2 && sc !== 4 && sc !== 8) {
@@ -129,16 +128,16 @@ function CanvasCM(canvas) {
     this.rotate = function (deg, x, y) {
         if (x !== undefined) {
             y = y === undefined ? x : y;
-            ctx.translate(x,y);
+            ctx.translate(x, y);
         }
-            ctx.rotate(degree(deg));
-        if(x !==undefined)
-            ctx.translate(-x,-y);
+        ctx.rotate(degree(deg));
+        if (x !== undefined)
+            ctx.translate(-x, -y);
         return this;
     };
 
     this.clear = function () {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         return this;
     };
 
@@ -163,23 +162,30 @@ function CanvasCM(canvas) {
         return ctx[p];
     };
 
+    /**
+     *
+     * @param {string|[]} name - event name or array of event names
+     * @param {function} f - callable function
+     * @returns {CanvasCM}
+     */
     this.on = function (name, f) {
-        if(Array.isArray(name)) {
+        if (Array.isArray(name)) {
             name.forEach(function (i) {
-                canvas.addEventListener(i,f.bind(this));
+                canvas.addEventListener(i, f.bind(this));
             });
         } else {
-            canvas.addEventListener(name,f.bind(this));
+            canvas.addEventListener(name, f.bind(this));
         }
 
         return this;
     };
+
     /**
      * Set parameter
      *
      * @param {string|Object} s - Name of parameter | Object of parameters (key:value)
      * @param {string} [val] - Value of parameter
-     * @returns {$c}
+     * @returns {CanvasCM}
      */
     this.set = function (s, val) {
         if (typeof s === 'object' && s !== null) {

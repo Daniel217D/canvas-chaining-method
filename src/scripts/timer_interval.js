@@ -10,7 +10,7 @@ CanvasCM.prototype._timeouts = [];
  * @param {string|number} id - Interval id - use for cleaning
  * @param {number} delay - Delay of interval
  * @param {number} [stop] - Delay for clearInterval
- * @returns {$c}
+ * @returns {CanvasCM}
  */
 //TODO id as optional
 CanvasCM.prototype.interval = function (f, id, delay, stop) {
@@ -35,7 +35,7 @@ CanvasCM.prototype.interval = function (f, id, delay, stop) {
  *
  * @param {string|number} id - Interval id
  * @param {number} [delay=0] - Delay before cleaning
- * @returns {$c}
+ * @returns {CanvasCM}
  */
 CanvasCM.prototype.cinterval = function (id, delay) {
     delay = (delay === undefined) ? 0 : delay;
@@ -53,7 +53,7 @@ CanvasCM.prototype.cinterval = function (id, delay) {
  * @param {function} f - Function for interval
  * @param {string|number} id - Interval id - use for cleaning
  * @param {number} delay - Delay of interval
- * @returns {$c}
+ * @returns {CanvasCM}
  */
 
 // TODO id as optional
@@ -70,7 +70,7 @@ CanvasCM.prototype.timeout = function (f, id, delay) {
  *
  * @param {string|number} id - Interval id
  * @param {number} [delay=0] - Delay before cleaning
- * @returns {$c}
+ * @returns {CanvasCM}
  */
 CanvasCM.prototype.ctimeout = function (id, delay) {
     delay = (delay === undefined) ? 0 : delay;
