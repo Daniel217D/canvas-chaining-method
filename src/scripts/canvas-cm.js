@@ -1,10 +1,8 @@
-function $c(canvas) {
+function CanvasCM(canvas) {
     if (!canvas)//TODO CHECK IS CANVAS
         throw 'Problems with canvas';
 
     const ctx = canvas.getContext('2d');
-    let intervals = [];
-    let timeouts = [];
 
     /**
      * Translate degrees to radians
@@ -95,88 +93,13 @@ function $c(canvas) {
      * @returns {$c}
      */
     this.circle = function (x, y, r) {
+        this.beginPath();
         this.arc(x, y, r, 0, degree(360));
-        return this;
-    };
-    /**
-     * Set interval and set this on ctx
-     *
-     * @param {function} f - Function for interval
-     * @param {string|number} id - Interval id - use for cleaning
-     * @param {number} delay - Delay of interval
-     * @param {number} [stop] - Delay for clearInterval
-     * @returns {$c}
-     */
-    //TODO id as optional
-    this.interval = function (f, id, delay, stop) {
-        if (intervals[id])
-            clearInterval(intervals[id]);
-
-        let counter = 0;
-
-        f.call(this, counter++);
-        intervals[id] = setInterval(() => {
-            f.call(this, counter++);
-        }, delay);
-
-        if (stop !== undefined)
-            this.cinterval(id, stop);
-
+        this.stroke();
+        
         return this;
     };
 
-    /**
-     * Clear interval by id
-     *
-     * @param {string|number} id - Interval id
-     * @param {number} [delay=0] - Delay before cleaning
-     * @returns {$c}
-     */
-    this.cinterval = function (id, delay) {
-        delay = (delay === undefined) ? 0 : delay;
-
-        if (intervals[id])
-            setTimeout(function () {
-                clearInterval(intervals[id]);
-            }, delay);
-
-        return this;
-    };
-    /**
-     * Set timeout and set this on ctx
-     *
-     * @param {function} f - Function for interval
-     * @param {string|number} id - Interval id - use for cleaning
-     * @param {number} delay - Delay of interval
-     * @returns {$c}
-     */
-
-    // TODO id as optional
-    this.timeout = function (f, id, delay) {
-        if (timeouts[id])
-            clearTimeout(timeouts[id]);
-
-        timeouts[id] = setTimeout(f.bind(this), delay);
-
-        return this;
-    };
-    /**
-     * Clear interval by id
-     *
-     * @param {string|number} id - Interval id
-     * @param {number} [delay=0] - Delay before cleaning
-     * @returns {$c}
-     */
-    this.ctimeout = function (id, delay) {
-        delay = (delay === undefined) ? 0 : delay;
-
-        if (timeouts[id])
-            setTimeout(function () {
-                clearTimeout(timeouts[id]);
-            }, delay);
-
-        return this;
-    };
 
     //TODO jsDoc
     this.drawImage = function (src, s, callback) {
@@ -272,7 +195,7 @@ function $c(canvas) {
     };
 
     /**
-     * Set unset before functions
+     * Set unset functions
      *
      * @see {@link https://codepen.io/zachwolf/post/chaining-canvas-methods}
      */
@@ -289,8 +212,9 @@ function $c(canvas) {
 
 }
 
-const create = (canvas) => {
-    return new $c(canvas);
+const $c = (canvas) => {
+    return new CanvasCM(canvas);
 };
 
-export default create;
+export default $c;
+export {CanvasCM};
