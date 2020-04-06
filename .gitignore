@@ -1,7 +1,15 @@
+# dependencies
+node_modules
 
-.idea/canvas-chaining-method.iml
-.idea/inspectionProfiles/profiles_settings.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/vcs.xml
+# production
+build
+
+# misc
+.DS_Store
+
+npm-debug.log
+yarn-error.log
+yarn.lock
+.yarnclean
+.vscode
+.idea
