@@ -206,16 +206,16 @@ function $c(canvas) {
     this.rotate = function (deg, x, y) {
         if (x !== undefined) {
             y = y === undefined ? x : y;
-            ctx.translate(x,y);
+            ctx.translate(x, y);
         }
         ctx.rotate(degree(deg));
-        if(x !==undefined)
-            ctx.translate(-x,-y);
+        if (x !== undefined)
+            ctx.translate(-x, -y);
         return this;
     };
 
     this.clear = function () {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         return this;
     };
 
@@ -241,12 +241,12 @@ function $c(canvas) {
     };
 
     this.on = function (name, f) {
-        if(Array.isArray(name)) {
+        if (Array.isArray(name)) {
             name.forEach(function (i) {
-                canvas.addEventListener(i,f.bind(this));
+                canvas.addEventListener(i, f.bind(this));
             });
         } else {
-            canvas.addEventListener(name,f.bind(this));
+            canvas.addEventListener(name, f.bind(this));
         }
 
         return this;
@@ -272,7 +272,7 @@ function $c(canvas) {
     };
 
     /**
-     * Set unset before functions
+     * Set unset functions
      *
      * @see {@link https://codepen.io/zachwolf/post/chaining-canvas-methods}
      */
