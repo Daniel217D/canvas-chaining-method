@@ -1,4 +1,5 @@
 import './timer_interval';
-import $c from './canvas-cm';
+import $c, {CanvasCM} from './canvas-cm';
 
 export default $c;
+export {CanvasCM};
