@@ -7,7 +7,7 @@ function $c(canvas) {
     let timeouts = [];
 
     /**
-     * Translate radians to degrees
+     * Translate degrees to radians
      *
      * @param {number} d - Degrees
      * @returns {number}
@@ -36,7 +36,7 @@ function $c(canvas) {
             canvas.height = w;
         }
 
-        return this
+        return this;
     };
 
     /**
@@ -55,14 +55,15 @@ function $c(canvas) {
         } else {
             lines = [
                 [sx, sy, ex, ey]
-            ]
+            ];
         }
+
         lines.forEach((i) => {
             this.beginPath()
                 .moveTo(i[0], i[1])
                 .lineTo(i[2], i[3])
+                .stroke()
                 .closePath()
-                .stroke();
         });
 
         return this;
@@ -86,6 +87,18 @@ function $c(canvas) {
     };
 
     /**
+     * Draw square
+     *
+     * @param {number} x - X top left position
+     * @param {number} y - Y top left position
+     * @param {number} r - Radius of the circle
+     * @returns {$c}
+     */
+    this.circle = function (x, y, r) {
+        this.arc(x, y, r, 0, degree(360));
+        return this;
+    };
+    /**
      * Set interval and set this on ctx
      *
      * @param {function} f - Function for interval
@@ -103,7 +116,7 @@ function $c(canvas) {
 
         f.call(this, counter++);
         intervals[id] = setInterval(() => {
-            f.call(this, counter++)
+            f.call(this, counter++);
         }, delay);
 
         if (stop !== undefined)
@@ -127,7 +140,7 @@ function $c(canvas) {
                 clearInterval(intervals[id]);
             }, delay);
 
-        return this
+        return this;
     };
     /**
      * Set timeout and set this on ctx
@@ -145,7 +158,7 @@ function $c(canvas) {
 
         timeouts[id] = setTimeout(f.bind(this), delay);
 
-        return this
+        return this;
     };
     /**
      * Clear interval by id
@@ -162,7 +175,7 @@ function $c(canvas) {
                 clearTimeout(timeouts[id]);
             }, delay);
 
-        return this
+        return this;
     };
 
     //TODO jsDoc
@@ -170,7 +183,7 @@ function $c(canvas) {
         const sc = (s !== undefined) ? s.length : 0;
         if (sc !== 2 && sc !== 4 && sc !== 8) {
             console.error('Uncaught TypeError: Failed to execute \'drawImage\' on \'CanvasRenderingContext2D\': Valid arities are: [2, 4, 8], but ' + sc + ' arguments provided.');
-            return this
+            return this;
         }
         const img = new Image();
         img.src = src;
@@ -193,18 +206,18 @@ function $c(canvas) {
     this.rotate = function (deg, x, y) {
         if (x !== undefined) {
             y = y === undefined ? x : y;
-            ctx.translate(x,y)
+            ctx.translate(x,y);
         }
-            ctx.rotate(degree(deg));
+        ctx.rotate(degree(deg));
         if(x !==undefined)
             ctx.translate(-x,-y);
-        return this
+        return this;
     };
 
     this.clear = function () {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         return this;
-    }
+    };
 
     /**
      * Return parameter of ctx
@@ -230,12 +243,14 @@ function $c(canvas) {
     this.on = function (name, f) {
         if(Array.isArray(name)) {
             name.forEach(function (i) {
-                canvas.addEventListener(i,f.bind(this))
-            })
+                canvas.addEventListener(i,f.bind(this));
+            });
         } else {
-            canvas.addEventListener(name,f.bind(this))
+            canvas.addEventListener(name,f.bind(this));
         }
-    }
+
+        return this;
+    };
     /**
      * Set parameter
      *
@@ -265,11 +280,17 @@ function $c(canvas) {
         if (typeof ctx[method] === 'function' && this[method] === undefined) {
             this[method] = (...args) => {
                 ctx[method](...args);
-                return this
-            }
+                return this;
+            };
         }
     }
 
     return this;
 
 }
+
+const create = (canvas) => {
+    return new $c(canvas);
+};
+
+export default create;
