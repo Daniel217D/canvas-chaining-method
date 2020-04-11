@@ -1,10 +1,26 @@
 import {degree} from "./helpers";
 
-function CanvasCM(canvas) {
-    if (!canvas)//TODO CHECK IS CANVAS
-        throw 'Problems with canvas';
+class CanvasCM {
+    /**
+     *
+     * @param {HTMLCanvasElement} canvas - canvas element
+     */
+    constructor(canvas) {
+        if (canvas === undefined || !(canvas instanceof HTMLCanvasElement))
+            throw 'Problems with canvas';
 
-    const ctx = canvas.getContext('2d');
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+
+        for (let method in this.ctx) {
+            if (typeof this.ctx[method] === 'function' && this[method] === undefined) {
+                this[method] = (...args) => {
+                    this.ctx[method](...args);
+                    return this;
+                };
+            }
+        }
+    }
 
     /**
      *  Set size of canvas
@@ -13,21 +29,21 @@ function CanvasCM(canvas) {
      * @param {number} [h] - Height of canvas
      * @returns {CanvasCM}
      */
-    this.setSize = function (w, h) {
+    setSize = (w, h) => {
         if (w === undefined && h === undefined) {
-            canvas.width = parseInt(getComputedStyle(canvas).width);
-            canvas.height = parseInt(getComputedStyle(canvas).height);
+            this.canvas.width = parseInt(getComputedStyle(this.canvas).width);
+            this.canvas.height = parseInt(getComputedStyle(this.canvas).height);
         } else if (w !== undefined && h !== undefined) {
-            canvas.width = w;
-            canvas.height = h;
+            this.canvas.width = w;
+            this.canvas.height = h;
         } else {
             w = w === undefined ? h : w;
-            canvas.width = w;
-            canvas.height = w;
+            this.canvas.width = w;
+            this.canvas.height = w;
         }
 
         return this;
-    };
+    }
 
     /**
      * Draw line
@@ -38,7 +54,7 @@ function CanvasCM(canvas) {
      * @param {number} [ey] - Y position of end point
      * @returns {CanvasCM}
      */
-    this.line = function (sx, sy, ex, ey) {
+    line = (sx, sy, ex, ey) => {
         let lines = [];
         if (Array.isArray(sx)) {
             lines = sx;
@@ -49,15 +65,12 @@ function CanvasCM(canvas) {
         }
 
         lines.forEach((i) => {
-            this.beginPath()
-                .moveTo(i[0], i[1])
-                .lineTo(i[2], i[3])
-                .stroke()
-                .closePath();
+            this.moveTo(i[0], i[1])
+                .lineTo(i[2], i[3]);
         });
 
         return this;
-    };
+    }
 
     /**
      * Draw square
@@ -67,14 +80,8 @@ function CanvasCM(canvas) {
      * @param side - Side of the square
      * @returns {CanvasCM}
      */
-    this.square = function (x, y, side) {
-        this.beginPath()
-            .rect(x, y, side, side)
-            .fill()
-            .stroke()
-            .closePath();
-        return this;
-    };
+    square = (x, y, side) => this.rect(x, y, side, side);
+
 
     /**
      * Draw circle
@@ -84,13 +91,7 @@ function CanvasCM(canvas) {
      * @param {number} r - Radius of the circle
      * @returns {CanvasCM}
      */
-    this.circle = function (x, y, r) {
-        this.beginPath();
-        this.arc(x, y, r, 0, degree(360));
-        this.stroke();
-
-        return this;
-    };
+    circle = (x, y, r) => this.arc(x, y, r, 0, degree(360));
 
 
     /**
@@ -101,65 +102,67 @@ function CanvasCM(canvas) {
      * @param {function} callback - callable after load image
      * @returns {CanvasCM}
      */
-    this.drawImage = function (src, s, callback) {
-        const sc = (s !== undefined) ? s.length : 0;
-        if (sc !== 2 && sc !== 4 && sc !== 8) {
+    drawImage = (src, s = [], callback) => {
+        const sl = s.length;
+
+        if (sl !== 2 && sl !== 4 && sl !== 8) {
             console.error('Uncaught TypeError: Failed to execute \'drawImage\' on \'CanvasRenderingContext2D\': Valid arities are: [2, 4, 8], but ' + sc + ' arguments provided.');
             return this;
         }
+
         const img = new Image();
-        img.src = src;
         img.onload = () => {
-            if (sc === 2)
-                ctx.drawImage(img, s[0], s[1]);
-            else if (sc === 4)
-                ctx.drawImage(img, s[0], s[1], s[2], s[3]);
-            else
-                ctx.drawImage(img, s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7]);
+            this.ctx.drawImage(img, ...s);
 
             if (callback) {
-                callback.call(this);
+                callback.call(this, this);
             }
-
         };
-        return this;
-    };
 
-    this.rotate = function (deg, x, y) {
+        img.src = src;
+
+        return this;
+    }
+
+    rotate = (deg, x, y) => {
         if (x !== undefined) {
             y = y === undefined ? x : y;
-            ctx.translate(x, y);
+            this.ctx.translate(x, y);
         }
-        ctx.rotate(degree(deg));
-        if (x !== undefined)
-            ctx.translate(-x, -y);
-        return this;
-    };
 
-    this.clear = function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.ctx.rotate(degree(deg));
+
+        if (x !== undefined)
+            this.ctx.translate(-x, -y);
+
         return this;
-    };
+    }
+
+
+    clear = () => {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        return this;
+    }
 
     /**
      * Return parameter of ctx
      * @param {string} p - Name of parameter
      * @returns {*}
      */
-    this.get = function (p) {
+    get = (p) => {
         switch (p.toLowerCase()) {
             case 'canvas':
-                return canvas;
+                return this.canvas;
             case 'ctx':
-                return ctx;
+                return this.ctx;
             case 'width':
             case 'w':
-                return canvas.width;
+                return this.canvas.width;
             case 'height':
             case 'h':
-                return canvas.height;
+                return this.canvas.height;
         }
-        return ctx[p];
+        return this.ctx[p];
     };
 
     /**
@@ -168,14 +171,14 @@ function CanvasCM(canvas) {
      * @param {function} f - callable function
      * @returns {CanvasCM}
      */
-    this.on = function (name, f) {
-        if (Array.isArray(name)) {
-            name.forEach(function (i) {
-                canvas.addEventListener(i, f.bind(this));
-            });
-        } else {
-            canvas.addEventListener(name, f.bind(this));
+    on = (name, f) => {
+        if (!Array.isArray(name)) {
+            name = [name];
         }
+
+        name.forEach((i) => {
+            this.canvas.addEventListener(i, e => f.call(this, e, this));
+        });
 
         return this;
     };
@@ -187,35 +190,18 @@ function CanvasCM(canvas) {
      * @param {string} [val] - Value of parameter
      * @returns {CanvasCM}
      */
-    this.set = function (s, val) {
+    set = (s, val) => {
         if (typeof s === 'object' && s !== null) {
             for (let i in s) {
                 if (s.hasOwnProperty(i)) {
-                    ctx[i] = s[i];
+                    this.ctx[i] = s[i];
                 }
             }
         } else if (s !== undefined && val !== undefined) {
-            ctx[s] = val;
+            this.ctx[s] = val;
         }
         return this;
     };
-
-    /**
-     * Set unset functions
-     *
-     * @see {@link https://codepen.io/zachwolf/post/chaining-canvas-methods}
-     */
-    for (let method in ctx) {
-        if (typeof ctx[method] === 'function' && this[method] === undefined) {
-            this[method] = (...args) => {
-                ctx[method](...args);
-                return this;
-            };
-        }
-    }
-
-    return this;
-
 }
 
 const $c = (canvas) => {
