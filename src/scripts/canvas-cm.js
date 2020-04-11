@@ -59,7 +59,7 @@ class CanvasCM {
     /**
      * Draw lines
      *
-     * @param {{sx,sy,ex,ey}[]} lns - Array of points
+     * @param {Array.<{sx: number,sy: number,ex: number,ey: number}>} lns - Array of points
      * @returns {CanvasCM}
      */
     lines = (lns = []) => {
@@ -96,7 +96,7 @@ class CanvasCM {
      * Draw image
      *
      * @param {string} src - image src
-     * @param {[]} s - list of params
+     * @param {number[]} s - list of params
      * @param {function} callback - callable after load image
      * @returns {CanvasCM}
      */
@@ -165,7 +165,7 @@ class CanvasCM {
 
     /**
      *
-     * @param {string|[]} name - event name or array of event names
+     * @param {string|string[]} name - event name or array of event names
      * @param {function} f - callable function
      * @returns {CanvasCM}
      */
