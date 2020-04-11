@@ -7,7 +7,10 @@ function draw($canvas) {
     $canvas
         .setSize()
         .set("strokeStyle", "red")
-        .line(0,0,100, 100)
+        .lines([
+            [0,0,100, 100],
+            [100,0,200, 100]
+        ])
         .square(250,250,100)
         .circle(350,350,50)
         .stroke()
