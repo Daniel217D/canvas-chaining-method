@@ -48,25 +48,23 @@ class CanvasCM {
     /**
      * Draw line
      *
-     * @param {number|{sx,sy,ex,ey}[]} sx - X position of start point || Array of points
-     * @param {number} [sy] - Y position of start point
-     * @param {number} [ex] - X position of end point
-     * @param {number} [ey] - Y position of end point
+     * @param {number} sx - X position of start point
+     * @param {number} sy - Y position of start point
+     * @param {number} ex - X position of end point
+     * @param {number} ey - Y position of end point
      * @returns {CanvasCM}
      */
-    line = (sx, sy, ex, ey) => {
-        let lines = [];
-        if (Array.isArray(sx)) {
-            lines = sx;
-        } else {
-            lines = [
-                [sx, sy, ex, ey]
-            ];
-        }
+    line = (sx, sy, ex, ey) => this.moveTo(sx, sy).lineTo(ex, ey);
 
-        lines.forEach((i) => {
-            this.moveTo(i[0], i[1])
-                .lineTo(i[2], i[3]);
+    /**
+     * Draw lines
+     *
+     * @param {{sx,sy,ex,ey}[]} lns - Array of points
+     * @returns {CanvasCM}
+     */
+    lines = (lns = []) => {
+        lns.forEach((i) => {
+            this.line(...i)
         });
 
         return this;
