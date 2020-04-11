@@ -64,7 +64,7 @@ class CanvasCM {
      */
     lines = (lns = []) => {
         lns.forEach((i) => {
-            this.line(...i)
+            this.line(...i);
         });
 
         return this;
