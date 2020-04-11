@@ -1,3 +1,4 @@
+//TODO better this part
 import {CanvasCM} from './canvas-cm';
 
 CanvasCM.prototype._intervals = [];
