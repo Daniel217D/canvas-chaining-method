@@ -6,13 +6,26 @@ const $canvas = $c(document.getElementById('canvas'));
 function draw($canvas) {
     $canvas
         .setSize()
-        .circle(100, 75, 50)
-        .interval(function () {
-            this.set("fillStyle", "rgb(" + getRandomInt(0,255) + "," + getRandomInt(0,255) + "," + getRandomInt(0,255) + ")")
-                .circle(100, 75, 50)
-                .fill();
-        }, 'test', 500)
-        .cinterval('test', 2500);
+        .set("strokeStyle", "red")
+        .line(0,0,100, 100)
+        .square(250,250,100)
+        .circle(350,350,50)
+        .stroke()
+        .fill()
+        .rotate(45,600, 600)
+        .drawImage("https://source.unsplash.com/random/200x200", [500, 500], function () {
+            console.log(this);
+        })
+        .rotate(-45,600, 600)
+        .on('mousemove', function (e) {
+            this.beginPath()
+                .circle(e.pageX, e.pageY, getRandomInt(5, 40))
+                .stroke()
+                .closePath();
+        })
+        .timeout(function () {
+            this.clear()
+        }, "test", 5000);
 }
 
 
