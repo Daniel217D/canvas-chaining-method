@@ -24,7 +24,7 @@ function draw($canvas) {
                 .closePath();
         })
         .timeout(function () {
-            this.clear()
+            this.set("strokeStyle", "blue")
         }, "test", 5000);
 }
 
