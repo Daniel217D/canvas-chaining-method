@@ -8,4 +8,4 @@ function degree(d) {
     return d * Math.PI / 180;
 }
 
-export {degree}
+export {degree};
