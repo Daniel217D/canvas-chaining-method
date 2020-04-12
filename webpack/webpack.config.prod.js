@@ -8,7 +8,7 @@ module.exports = env => {
   const main = env.dist ? dist : (env.docs ? docs : {});
 
   const js_name = env.dist ? {
-      filename: 'index.js'
+      filename: '[name].js'
   } : env.docs ? {
       filename: 'js/[name].[chunkhash:8].js',
       chunkFilename: 'js/[name].[chunkhash:8].chunk.js'
