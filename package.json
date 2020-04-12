@@ -2,9 +2,11 @@
   "name": "canvas-chaining-method",
   "version": "0.0.6",
   "description": "Use canvas easier",
-  "main": "src/scripts/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js --colors",
+    "build": "npm run build:dist && npm run build:docs",
+    "build:dist": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js --colors --env.dist",
+    "build:docs": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js --colors --env.docs",
     "start": "webpack-dev-server --open --config webpack/webpack.config.dev.js"
   },
   "repository": {
