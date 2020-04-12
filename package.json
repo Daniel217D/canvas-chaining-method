@@ -1,6 +1,6 @@
 {
   "name": "canvas-chaining-method",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Use canvas easier",
   "main": "dist/index.js",
   "scripts": {
